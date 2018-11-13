@@ -1,9 +1,9 @@
-var axios = require("axios");
+const axios = require("axios");
 
 // // private sec key voor github api plan
-var id = "YOUR_CLIENT_ID";
-var sec = "YOUR_SECRET_ID";
-var params = "?client_id=" + id + "&client_secret=" + sec;
+const id = "YOUR_CLIENT_ID";
+const sec = "YOUR_SECRET_ID";
+const params = `?client_id=${id}&client_secret=${sec}`;
 
 function getProfile(username) {
   return axios
