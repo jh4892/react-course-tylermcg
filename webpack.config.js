@@ -2,7 +2,7 @@ var path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./app/index.js",
+  entry: ["@babel/polyfill", "./app/index.js"],
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index_bundle.js",
@@ -14,7 +14,7 @@ module.exports = {
       { test: /\.(css)$/, use: ["style-loader", "css-loader"] }
     ]
   },
-  mode: process.env.NODE_ENV === "production" ? "production" : "develop",
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devServer: {
     historyApiFallback: true
   },

@@ -1,5 +1,5 @@
-var React = require("react");
-var PropTypes = require("prop-types");
+const React = require("react");
+const PropTypes = require("prop-types");
 
 var styles = {
   content: {
@@ -19,37 +19,27 @@ class Loading extends React.Component {
   }
 
   componentDidMount() {
-    var stopper = this.props.text + "...";
+    const { text, speed } = this.props;
 
-    this.interval = setInterval(
-      function() {
-        if (this.state.text === stopper) {
-          this.setState(function() {
-            return {
-              text: this.props.text
-            };
-          });
-        } else {
-          this.setState(function(prevState) {
-            return {
-              text: prevState.text + "."
-            };
-          });
-        }
-      }.bind(this),
-      300
-    );
+    const stopper = text + "...";
 
-    setTimeout(
-      function() {
-        clearInterval(this.interval);
-      }.bind(this),
-      1000
-    );
+    this.interval = window.setInterval(() => {
+      // console.log("...");
+
+      if (this.state.text === stopper) {
+        this.setState(() => ({
+          text
+        }));
+      } else {
+        this.setState(prevstate => ({
+          text: prevstate.text + "."
+        }));
+      }
+    }, speed);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    window.clearInterval(this.interval);
   }
 
   render() {
