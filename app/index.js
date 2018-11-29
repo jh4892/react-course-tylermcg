@@ -1,9 +1,9 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-var PropTypes = require("prop-types");
-require("./index.css");
+import React from "react";
+import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
+import "./index.css";
 
-var App = require("./components/App");
+import App from "./components/App";
 // state
 // life cycle events
 // UI
