@@ -58,15 +58,11 @@ SelectLanguage.propTypes = {
 };
 
 class Popular extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedLanguage: "All",
-      repos: null
-    };
+  state = {
+    selectedLanguage: "All",
+    repos: null
+  };
 
-    // this.updateLanguage = this.updateLanguage.bind(this);
-  }
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
