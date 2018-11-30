@@ -1,26 +1,27 @@
-import axios from "axios";
-
 // // private sec key voor github api plan
 const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
 const params = `?client_id=${id}&client_secret=${sec}`;
 
 async function getProfile(username) {
-  const profile = await axios.get(
+  const profile = await fetch(
     `https://api.github.com/users/${username}${params}`
   );
 
-  return profile.data;
+  const data = profile.json();
+  return data;
 }
 
-function getRepos(username) {
-  return axios.get(
+async function getRepos(username) {
+  const response = await fetch(
     `https://api.github.com/users/${username}/repos${params}&per_page=100`
   );
+
+  return await response.json();
 }
 
 function getStarCount(repos) {
-  return repos.data.reduce((count, { stargazers_count }) => {
+  return repos.reduce((count, { stargazers_count }) => {
     count + stargazers_count;
   }, 0);
 }
@@ -56,7 +57,7 @@ export async function battle(players) {
     handleError
   );
 
-  return results === null ? results : sortPlayers(userData);
+  return results === null ? results : sortPlayers(results);
 }
 
 export async function fetchPopularRepos(language) {
@@ -64,9 +65,9 @@ export async function fetchPopularRepos(language) {
     `https://api.github.com/search/repositories?q=stars:>1+language:${language}&sort=stars&order=desc&type=Repositories`
   );
 
-  const results = await axios.get(encodedURI).catch(handleError);
+  const results = await fetch(encodedURI).catch(handleError);
 
-  return results.data.items;
+  return await results.items.json();
 }
 
 // call with: fetchPopularRepos("Java").then(function(res) {});
