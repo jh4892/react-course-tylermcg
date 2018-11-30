@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import queryString from "query-string";
-import api from "../utils/api";
+import { battle } from "../utils/api";
 import { Link } from "react-router-dom";
 import PlayerPreview from "./PlayerPreview";
 import Loading from "./Loading";
@@ -54,29 +54,27 @@ class Results extends React.Component {
     loading: true
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const querystringInCurrentURL = this.props.location.search;
     const { playerOneName, playerTwoName } = queryString.parse(
       querystringInCurrentURL
     );
 
-    api.battle([playerOneName, playerTwoName]).then(
-      function(results) {
-        if (results === null) {
-          return this.setState(() => ({
-            error: "Looks like a players is nonexistent",
-            loading: false
-          }));
-        }
+    const results = await battle([playerOneName, playerTwoName]);
 
-        this.setState(() => ({
-          loading: false,
-          winner: results[0],
-          loser: results[1],
-          error: null
-        }));
-      }.bind(this)
-    );
+    if (results === null) {
+      return this.setState(() => ({
+        error: "Looks like a players is nonexistent",
+        loading: false
+      }));
+    }
+
+    this.setState(() => ({
+      loading: false,
+      winner: results[0],
+      loser: results[1],
+      error: null
+    }));
   }
 
   render() {
